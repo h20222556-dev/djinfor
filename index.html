@@ -118,11 +118,9 @@
       --motion-fade:        0.6s cubic-bezier(0.4, 0, 0.2, 1);
       --motion-reveal:      0.7s cubic-bezier(0.16, 1, 0.3, 1);
       --motion-stagger:     80ms;
-      --motion-cursor:      0.12s linear;
 
       /* Dynamic components configuration */
       --spotlight-color:    rgba(101, 93, 81, 0.07);
-      --cursor-blend-mode:  multiply;
       --mouse-x:            50%;
       --mouse-y:            50%;
     }
@@ -151,7 +149,6 @@
       --color-surface-variant:          #474746;
 
       --spotlight-color:    rgba(76, 70, 59, 0.3);
-      --cursor-blend-mode:  screen;
     }
 
     /* Base reset & configuration */
@@ -172,11 +169,6 @@
 
     body {
       overflow-x: hidden;
-      cursor: none; /* Hide default cursor */
-    }
-
-    a, button, [role="button"], input, select, textarea, .card, .filter-tab, dialog {
-      cursor: none; /* Hide default cursor on interactive items to show custom halo */
     }
 
     /* Container Utility */
@@ -227,34 +219,37 @@
     }
 
     /* Custom Cursor */
-    #cursor {
+    #cursor-ring {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
-      width: 12px;
-      height: 12px;
-      background-color: var(--color-primary);
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.6;
-      z-index: 999999;
-      transform: translate3d(-50%, -50%, 0);
-      transition: width var(--motion-cursor), height var(--motion-cursor), opacity var(--motion-cursor), background-color var(--motion-cursor);
-      mix-blend-mode: var(--cursor-blend-mode);
-      will-change: transform, width, height;
-    }
-
-    #cursor.hovered {
       width: 32px;
       height: 32px;
-      opacity: 0.25;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      background-color: white;
+      mix-blend-mode: difference;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, transform 0.1s ease;
     }
 
-    #cursor.clicking {
-      width: 6px;
-      height: 6px;
-      opacity: 0.9;
+    #cursor-ring.clicking {
+      width: 20px !important;
+      height: 20px !important;
     }
+
+    @media (pointer: fine) {
+      html, body, a, button, [role="button"], input, select, textarea, .project-card, .filter-tab, dialog {
+        cursor: none !important;
+      }
+      #cursor-ring {
+        display: block;
+      }
+    }
+
+
 
     /* Header & Navigation */
     header {
@@ -1281,7 +1276,7 @@
       a, button, [role="button"], input, select, textarea, .card, .filter-tab, dialog {
         cursor: auto !important;
       }
-      #cursor {
+      #cursor-ring {
         display: none !important;
       }
       .reveal {
@@ -1301,7 +1296,7 @@
 <body>
 
   <!-- Custom Cursor -->
-  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
 
   <!-- Global Page Spotlight -->
   <div class="hero-spotlight"></div>
@@ -1744,67 +1739,59 @@
       }
     };
 
-    // Global Check Device Mode
-    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-
     // Custom Cursor tracking
-    const cursor = document.getElementById('cursor');
-    let cursorX = 0, cursorY = 0;
-    let targetX = 0, targetY = 0;
-    const lerpSpeed = 0.15;
-    let isCursorActive = false;
+    const cursorRing = document.getElementById('cursor-ring');
 
-    if (isTouchDevice) {
-      if (cursor) cursor.style.display = 'none';
-      document.body.style.cursor = 'auto';
-    } else {
-      window.addEventListener('mousemove', (e) => {
-        targetX = e.clientX;
-        targetY = e.clientY;
-        if (!isCursorActive) {
-          isCursorActive = true;
-          cursor.style.opacity = '0.6';
-          cursorX = targetX; // Snap initial position
-          cursorY = targetY;
-        }
-      });
+    let mx = 0;
+    let my = 0;
+    let rx = 0;
+    let ry = 0;
+    let firstMove = true;
 
-      function updateCursor() {
-        if (isCursorActive) {
-          cursorX += (targetX - cursorX) * lerpSpeed;
-          cursorY += (targetY - cursorY) * lerpSpeed;
-          cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-        }
-        requestAnimationFrame(updateCursor);
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (firstMove) {
+        rx = mx;
+        ry = my;
+        firstMove = false;
+      }
+    });
+
+    function updateCursor() {
+      rx += (mx - rx) * 0.1;
+      ry += (my - ry) * 0.1;
+      if (cursorRing) {
+        cursorRing.style.left = rx + 'px';
+        cursorRing.style.top = ry + 'px';
       }
       requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
 
-      document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-      });
-      document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '0.6';
-      });
+    // Click animation
+    document.addEventListener('mousedown', () => {
+      if (cursorRing) cursorRing.classList.add('clicking');
+    });
+    document.addEventListener('mouseup', () => {
+      if (cursorRing) cursorRing.classList.remove('clicking');
+    });
 
-      // Hover overlay trigger using event delegation
-      document.addEventListener('mouseover', (e) => {
-        const target = e.target;
-        const isInteractive = target.closest('a, button, [role="button"], input, select, textarea, .project-card, .filter-tab');
-        if (isInteractive) {
-          cursor.classList.add('hovered');
-        } else {
-          cursor.classList.remove('hovered');
+    // Hover behavior on interactive elements (a, button)
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (cursorRing) {
+          cursorRing.style.width = '20px';
+          cursorRing.style.height = '20px';
         }
       });
-
-      document.addEventListener('mousedown', () => {
-        cursor.classList.add('clicking');
+      el.addEventListener('mouseleave', () => {
+        if (cursorRing) {
+          cursorRing.style.width = '32px';
+          cursorRing.style.height = '32px';
+        }
       });
-
-      document.addEventListener('mouseup', () => {
-        cursor.classList.remove('clicking');
-      });
-    }
+    });
 
     // Fixed Nav scrolled state
     const header = document.querySelector('header');
@@ -2042,7 +2029,7 @@
 
       // Open Modal
       document.body.style.overflow = 'hidden';
-      if (cursor) modal.appendChild(cursor);
+      if (cursorRing) modal.appendChild(cursorRing);
       modal.showModal();
     }
 
@@ -2053,7 +2040,7 @@
 
     modal.addEventListener('close', () => {
       document.body.style.overflow = '';
-      if (cursor) document.body.appendChild(cursor);
+      if (cursorRing) document.body.appendChild(cursorRing);
     });
 
     // Fallback backdrop click dismissal (for Safari where closedby="any" is not supported)
