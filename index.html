@@ -1739,6 +1739,9 @@
       }
     };
 
+    // Global Check Device Mode
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
     // Custom Cursor tracking
     const cursorRing = document.getElementById('cursor-ring');
 
