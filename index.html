@@ -1739,8 +1739,12 @@
       }
     };
 
+    // Global Check Device Mode
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
     // Custom Cursor tracking
     const cursorRing = document.getElementById('cursor-ring');
+    const spotlight = document.querySelector('.hero-spotlight');
 
     let mx = 0;
     let my = 0;
@@ -1755,6 +1759,12 @@
         rx = mx;
         ry = my;
         firstMove = false;
+      }
+
+      // Update spotlight position instantly on mousemove
+      if (!isTouchDevice && spotlight) {
+        spotlight.style.setProperty('--mouse-x', mx + 'px');
+        spotlight.style.setProperty('--mouse-y', my + 'px');
       }
     });
 
@@ -1853,14 +1863,8 @@
     // Launch typewriter after 1s delay
     setTimeout(handleTypewriter, 800);
 
-    const spotlight = document.querySelector('.hero-spotlight');
-
     if (!isTouchDevice && spotlight) {
       spotlight.style.opacity = '1';
-      window.addEventListener('mousemove', (e) => {
-        spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
-        spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
-      });
       document.addEventListener('mouseleave', () => {
         spotlight.style.opacity = '0';
       });
