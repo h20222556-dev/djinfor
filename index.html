@@ -1291,6 +1291,112 @@
         display: none !important;
       }
     }
+
+    /* Contact Section Buttons Hover override */
+    #contact-email-btn,
+    #contact-github-btn,
+    #contact-instagram-btn {
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    #contact-email-btn:hover,
+    #contact-github-btn:hover,
+    #contact-instagram-btn:hover {
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+      border-color: #ffffff !important;
+    }
+
+    /* Contact Popups Overlay */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    
+    .popup-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Contact Popup container */
+    .contact-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      background-color: var(--color-surface-container-low);
+      border: 1px solid var(--color-outline-variant);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      min-width: 320px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+      z-index: 1001;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-popup.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    .popup-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      color: var(--color-on-surface);
+      padding: 8px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--motion-default);
+      cursor: pointer;
+    }
+    .popup-close-btn:hover {
+      background-color: var(--color-surface-container-high);
+    }
+    .popup-close-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .popup-title {
+      font-size: var(--fs-headline-sm);
+      font-weight: var(--fw-medium);
+      color: var(--color-on-surface);
+      margin-top: 8px;
+    }
+
+    .email-display {
+      font-size: var(--fs-body-lg);
+      font-weight: var(--fw-regular);
+      color: var(--color-on-surface);
+      background-color: var(--color-surface-container);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px dashed var(--color-outline-variant);
+      user-select: all;
+      text-align: center;
+      word-break: break-all;
+    }
+
+    .popup-desc {
+      font-size: var(--fs-body-md);
+      color: var(--color-on-surface-variant);
+      line-height: var(--lh-normal);
+    }
   </style>
 </head>
 <body>
@@ -1549,9 +1655,9 @@
         <p class="contact-subtext reveal">I am always open to discussing new projects, styling libraries, or creative director roles.</p>
         
         <div class="reveal" style="margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap;">
-          <a href="mailto:your@email.com" class="btn btn-primary btn-lg" target="_blank">Email</a>
-          <a href="https://github.com/" class="btn btn-secondary btn-lg" target="_blank">GitHub</a>
-          <a href="https://instagram.com/" class="btn btn-secondary btn-lg" target="_blank">Instagram</a>
+          <a href="#" class="btn btn-primary btn-lg" id="contact-email-btn" role="button" aria-haspopup="dialog">Email</a>
+          <a href="#" class="btn btn-secondary btn-lg" id="contact-github-btn" role="button" aria-haspopup="dialog">GitHub</a>
+          <a href="#" class="btn btn-secondary btn-lg" id="contact-instagram-btn" role="button" aria-haspopup="dialog">Instagram</a>
         </div>
       </div>
     </section>
@@ -1629,6 +1735,53 @@
       </div>
     </div>
   </dialog>
+
+  <!-- Contact Popups Overlay -->
+  <div id="contact-popup-overlay" class="popup-overlay"></div>
+
+  <!-- Email Popup -->
+  <div id="email-popup" class="contact-popup">
+    <button class="popup-close-btn" aria-label="Close email popup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <h3 class="popup-title">Email</h3>
+    <div class="popup-body">
+      <div class="email-display" id="email-text">kakajae@icloud.com</div>
+      <button id="copy-email-btn" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 24px;">Copy</button>
+    </div>
+  </div>
+
+  <!-- GitHub Popup -->
+  <div id="github-popup" class="contact-popup">
+    <button class="popup-close-btn" aria-label="Close github popup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <h3 class="popup-title">GitHub</h3>
+    <div class="popup-body">
+      <p class="popup-desc">View my repositories and open source work</p>
+      <a href="https://github.com/h20222556-dev" target="_blank" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 24px;">Open GitHub</a>
+    </div>
+  </div>
+
+  <!-- Instagram Popup -->
+  <div id="instagram-popup" class="contact-popup">
+    <button class="popup-close-btn" aria-label="Close instagram popup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <h3 class="popup-title">Instagram</h3>
+    <div class="popup-body">
+      <p class="popup-desc" style="margin-bottom: 8px;">Currently under preparation. Coming soon.</p>
+    </div>
+  </div>
 
   <!-- Interactive Logic Script -->
   <script>
@@ -1952,6 +2105,84 @@
         if (!clickedInside) {
           modal.close();
         }
+      });
+    }
+
+    // Contact popups interactive logic
+    const overlay = document.getElementById('contact-popup-overlay');
+    const popups = {
+      email: document.getElementById('email-popup'),
+      github: document.getElementById('github-popup'),
+      instagram: document.getElementById('instagram-popup')
+    };
+
+    const contactBtns = {
+      email: document.getElementById('contact-email-btn'),
+      github: document.getElementById('contact-github-btn'),
+      instagram: document.getElementById('contact-instagram-btn')
+    };
+
+    function openContactPopup(type) {
+      const popup = popups[type];
+      if (!popup) return;
+
+      closeAllContactPopups();
+
+      overlay.classList.add('show');
+      popup.classList.add('show');
+      
+      const closeBtn = popup.querySelector('.popup-close-btn');
+      if (closeBtn) closeBtn.focus();
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAllContactPopups() {
+      overlay.classList.remove('show');
+      Object.values(popups).forEach(popup => {
+        popup.classList.remove('show');
+      });
+      document.body.style.overflow = '';
+    }
+
+    Object.keys(contactBtns).forEach(key => {
+      contactBtns[key].addEventListener('click', (e) => {
+        e.preventDefault();
+        openContactPopup(key);
+      });
+    });
+
+    Object.values(popups).forEach(popup => {
+      const closeBtn = popup.querySelector('.popup-close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          closeAllContactPopups();
+        });
+      }
+    });
+
+    overlay.addEventListener('click', () => {
+      closeAllContactPopups();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAllContactPopups();
+      }
+    });
+
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    if (copyEmailBtn) {
+      copyEmailBtn.addEventListener('click', () => {
+        const emailText = document.getElementById('email-text').textContent;
+        navigator.clipboard.writeText(emailText).then(() => {
+          copyEmailBtn.textContent = 'Copied!';
+          setTimeout(() => {
+            copyEmailBtn.textContent = 'Copy';
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy text: ', err);
+        });
       });
     }
   </script>
