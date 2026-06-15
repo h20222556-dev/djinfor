@@ -861,13 +861,13 @@
         top: 0;
         height: 100vh;
         overflow: hidden;
-        background-color: var(--color-surface-container);
+        background-color: #000000;
       }
 
       .modal-image-panel img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         opacity: 0;
         transform: scale(1.04);
         transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
@@ -1019,15 +1019,18 @@
       margin-top: 12px;
       border-radius: var(--radius-md);
       overflow: hidden;
-      aspect-ratio: 1.6;
+      aspect-ratio: auto;
       width: 100%;
-      background-color: var(--color-surface-container);
+      max-height: 600px;
+      background-color: #000000;
     }
 
     .process-image-wrapper img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      max-height: 600px;
+      object-fit: contain;
+      display: block;
     }
 
     .decision-list {
@@ -1638,54 +1641,6 @@
         
         <!-- Project Cards Grid -->
         <div class="project-grid reveal-group">
-          <!-- Card 1: Development -->
-          <article class="project-card reveal" data-category="development" data-id="project1" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Design System Engine case study">
-            <div class="project-card-image-wrapper">
-              <img src="" alt="Graphical UI displaying CSS custom property structures and tokens dashboard">
-            </div>
-            <div class="project-card-info">
-              <span class="project-card-tag"></span>
-              <h3 class="project-card-title"></h3>
-              <p class="project-card-desc"></p>
-            </div>
-          </article>
-
-          <!-- Card 2: Design -->
-          <article class="project-card reveal" data-category="design" data-id="project2" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View E-Commerce Rebrand case study">
-            <div class="project-card-image-wrapper">
-              <img src="" alt="Mockup of clean editorial online checkout flow overlayed on product grids">
-            </div>
-            <div class="project-card-info">
-              <span class="project-card-tag"></span>
-              <h3 class="project-card-title"></h3>
-              <p class="project-card-desc"></p>
-            </div>
-          </article>
-
-          <!-- Card 3: Planning -->
-          <article class="project-card reveal" data-category="planning" data-id="project3" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View AI Strategy & Roadmap case study">
-            <div class="project-card-image-wrapper">
-              <img src="" alt="Technical chart representing strategic product integration and user testing phases">
-            </div>
-            <div class="project-card-info">
-              <span class="project-card-tag"></span>
-              <h3 class="project-card-title"></h3>
-              <p class="project-card-desc"></p>
-            </div>
-          </article>
-
-          <!-- Card 4: Creative -->
-          <article class="project-card reveal" data-category="creative" data-id="project4" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Interactive Installations case study">
-            <div class="project-card-image-wrapper">
-              <img src="" alt="Fluid color pattern generated procedurally by motion capture feeds">
-            </div>
-            <div class="project-card-info">
-              <span class="project-card-tag"></span>
-              <h3 class="project-card-title"></h3>
-              <p class="project-card-desc"></p>
-            </div>
-          </article>
-
           <!-- Card 5: Creative - Ayla -->
           <article class="project-card reveal" data-category="creative" data-id="project-ayla" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View 에일라: 균형의 그림자 case study">
             <div class="project-card-image-wrapper">
@@ -1871,8 +1826,7 @@
           </div>
           
           <div class="modal-footer">
-            <a href="#" class="btn btn-primary" id="modal-live-btn" target="_blank">View Live</a>
-            <a href="#" class="btn btn-secondary" id="modal-github-btn" target="_blank">GitHub</a>
+            <a href="#" class="btn btn-primary" id="modal-live-btn" target="_blank">View More</a>
           </div>
         </div>
       </div>
@@ -1930,17 +1884,6 @@
   <script>
     // Project Dataset
     const projectData = {
-      placeholder: {
-        title: "",
-        tag: "",
-        problem: "",
-        process: [],
-        images: [],
-        decision: [],
-        outcome: "",
-        liveUrl: "",
-        githubUrl: ""
-      },
       "project-ayla": {
         title: "에일라: 균형의 그림자",
         tag: "Creative / 올림퍼시 · 2025",
@@ -1958,8 +1901,7 @@
           "관객들로 하여금 스스로를 옥죄던 강박을 내려놓고 무너진 삶의 중심을 회복하게 만드는 치유의 동력이 되기를 기대한다."
         ],
         outcome: "3조 올림퍼시 — 여동규, 이동재, 함가연, 진유진, 고나영",
-        liveUrl: "#",
-        githubUrl: "#"
+        liveUrl: "https://www.figma.com/proto/MDpnSYXDgmj2e5oo7Bct7y/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=125-14&p=f&t=5MJGmxvdoGwsMrRC-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A"
       }
     };
 
@@ -2245,7 +2187,6 @@
 
       // Links settings
       document.getElementById('modal-live-btn').href = data.liveUrl;
-      document.getElementById('modal-github-btn').href = data.githubUrl;
 
       // Open Modal
       document.body.style.overflow = 'hidden';
