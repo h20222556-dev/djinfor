@@ -1803,6 +1803,18 @@
               <p class="project-card-desc">공연 관람 기록을 지도 위에 핀으로 시각화하고, 예매·후기·커뮤니티를 하나로 연결한 통합 공연 아카이빙 앱</p>
             </div>
           </article>
+
+          <!-- Card Ohmygat: Creative -->
+          <article class="project-card reveal" data-category="creative" data-id="project-ohmygat" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View OH MY GAT case study">
+            <div class="project-card-image-wrapper">
+              <img src="/images/ohmygat_poster.png" alt="OH MY GAT 포스터">
+            </div>
+            <div class="project-card-info">
+              <span class="project-card-tag">이름있는조</span>
+              <h3 class="project-card-title">OH MY GAT</h3>
+              <p class="project-card-desc">케이팝데몬헌터스와 스트릿 우먼 파이터에 담겨져있는 한국요소를 찾아 설명하는 포스터</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -2123,6 +2135,25 @@
         outcome: "DJ와 아이들 — 이동재",
         liveUrl: "https://plin-amber.vercel.app/",
         appUrl: "https://plin-three.vercel.app/"
+      },
+      "project-ohmygat": {
+        title: "OH MY GAT",
+        tag: "Creative / 이름있는조 · 2026",
+        problem: "케이팝데몬헌터스와 스트릿 우먼 파이터에 담겨져있는 한국요소를 찾아 설명하는 포스터입니다.",
+        process: [
+          {
+            subtitle: "프로젝트 소개",
+            body: "문화콘텐츠기초 수업에서 진행한 프로젝트. 케이팝데몬헌터스와 스트릿 우먼 파이터 속에 녹아있는 한국 전통 문화 요소를 발굴하고 시각적으로 재해석하여 포스터로 표현하였다. 한국의 전통 미감과 현대 케이팝 콘텐츠의 접점을 탐구한 작업이다."
+          }
+        ],
+        images: ["/images/ohmygat_poster.png"],
+        decision: [
+          "케이팝 콘텐츠 속 한국 전통 요소를 체계적으로 분석하고 시각화하여 문화적 정체성을 재조명하였다.",
+          "자개, 산수화, 갓 등 한국 전통 미감을 현대적 포스터 디자인으로 재해석하였다.",
+          "대중문화와 전통문화의 연결고리를 발견함으로써 한국 문화의 현재적 가치를 탐구하였다."
+        ],
+        outcome: "이름있는조 — 황도영, 이동재, 김서연, 이화영, 현나경",
+        liveUrl: "https://ohmygat.vercel.app/"
       }
     };
 
@@ -2355,6 +2386,9 @@
         } else if (projectId === 'project-plin') {
           imagePanel.style.backgroundColor = '#0f0f0f';
           modalHeroImg.style.objectFit = 'contain';
+        } else if (projectId === 'project-ohmygat') {
+          imagePanel.style.backgroundColor = '#0a0a0a';
+          modalHeroImg.style.objectFit = 'contain';
         } else {
           imagePanel.style.backgroundColor = '';
           modalHeroImg.style.objectFit = '';
@@ -2392,7 +2426,7 @@
             stepImgSrc = data.images[1];
             stepImgAlt = "에일라: 균형의 그림자 내용 설명";
           }
-        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon' || projectId === 'project-plin') {
+        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon' || projectId === 'project-plin' || projectId === 'project-ohmygat') {
           // No process image in the right panel to avoid duplication with the left hero panel
           stepImgSrc = null;
         } else if (data.images && data.images[idx]) {
