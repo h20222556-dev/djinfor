@@ -1815,6 +1815,18 @@
               <p class="project-card-desc">케이팝데몬헌터스와 스트릿 우먼 파이터에 담겨져있는 한국요소를 찾아 설명하는 포스터</p>
             </div>
           </article>
+
+          <!-- Card Palebluedot: Design -->
+          <article class="project-card reveal" data-category="design" data-id="project-palebluedot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Pale Blue Dot. case study">
+            <div class="project-card-image-wrapper">
+              <img src="/images/palebluedot.png" alt="Pale Blue Dot. 타이포그래피 작품">
+            </div>
+            <div class="project-card-info">
+              <span class="project-card-tag">이동재</span>
+              <h3 class="project-card-title">Pale Blue Dot.</h3>
+              <p class="project-card-desc">칼 세이건의 코스모스 속 구절에서 영감을 받아 타이포그래피로 표현한 혼란과 안정</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -2154,6 +2166,25 @@
         ],
         outcome: "이름있는조 — 황도영, 이동재, 김서연, 이화영, 현나경",
         liveUrl: "https://ohmygat.vercel.app/"
+      },
+      "project-palebluedot": {
+        title: "Pale Blue Dot.",
+        tag: "Design / 이동재 · 2026",
+        problem: "칼 세이건의 저서 <코스모스> 속 'Pale Blue Dot.' 구절에서 영감을 받아, 광활한 우주 속 창백하게 푸른 점인 지구의 모습을 타이포그래피로 표현하여 '혼란과 안정'을 나타내었다.",
+        process: [
+          {
+            subtitle: "작품 소개",
+            body: "Adobe Illustrator를 활용하여 제작한 타이포그래피 작품. 칼 세이건의 'Pale Blue Dot.' 구절을 텍스트 소스로 삼아, 크고 작은 글자들을 다양한 방향과 크기로 배치함으로써 우주의 혼돈과 그 속에서 찾을 수 있는 안정감을 동시에 담아내고자 하였다."
+          }
+        ],
+        images: ["/images/palebluedot.png"],
+        decision: [
+          "타이포그래피만을 사용하여 우주의 광활함과 지구의 미소함을 시각적으로 대비시켰다.",
+          "글자의 크기, 방향, 굵기 변화를 통해 혼란과 안정이라는 상반된 감정을 하나의 화면에 공존시켰다.",
+          "칼 세이건의 원문 구절 자체를 조형 요소로 활용하여 내용과 형식의 일치를 추구하였다."
+        ],
+        outcome: "개인 작업 — 이동재",
+        liveUrl: ""
       }
     };
 
@@ -2389,6 +2420,9 @@
         } else if (projectId === 'project-ohmygat') {
           imagePanel.style.backgroundColor = '#0a0a0a';
           modalHeroImg.style.objectFit = 'contain';
+        } else if (projectId === 'project-palebluedot') {
+          imagePanel.style.backgroundColor = '#0a0818';
+          modalHeroImg.style.objectFit = 'contain';
         } else {
           imagePanel.style.backgroundColor = '';
           modalHeroImg.style.objectFit = '';
@@ -2426,7 +2460,7 @@
             stepImgSrc = data.images[1];
             stepImgAlt = "에일라: 균형의 그림자 내용 설명";
           }
-        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon' || projectId === 'project-plin' || projectId === 'project-ohmygat') {
+        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon' || projectId === 'project-plin' || projectId === 'project-ohmygat' || projectId === 'project-palebluedot') {
           // No process image in the right panel to avoid duplication with the left hero panel
           stepImgSrc = null;
         } else if (data.images && data.images[idx]) {
@@ -2463,6 +2497,11 @@
       const liveBtn = document.getElementById('modal-live-btn');
       if (liveBtn) {
         liveBtn.href = data.liveUrl;
+        if (projectId === 'project-palebluedot') {
+          liveBtn.style.display = 'none';
+        } else {
+          liveBtn.style.display = 'inline-flex';
+        }
       }
 
       const appBtn = document.getElementById('modal-app-btn');
