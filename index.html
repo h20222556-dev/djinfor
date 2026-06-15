@@ -1652,6 +1652,18 @@
               <p class="project-card-desc">신화를 바탕으로 새롭게 각색한 프리퀄 이야기</p>
             </div>
           </article>
+
+          <!-- Card Pencil: Creative -->
+          <article class="project-card reveal" data-category="creative" data-id="project-pencil" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View 나는 그들의 연필을 빌렸다 case study">
+            <div class="project-card-image-wrapper">
+              <img src="/images/pencil_poster.png" alt="나는 그들의 연필을 빌렸다 포스터">
+            </div>
+            <div class="project-card-info">
+              <span class="project-card-tag">마감이 우리를 길렀조</span>
+              <h3 class="project-card-title">나는 그들의 연필을 빌렸다</h3>
+              <p class="project-card-desc">오래된 전공서적 속 연필 자국에서 발견한 선배들의 흔적과 배움의 과정</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1902,6 +1914,25 @@
         ],
         outcome: "3조 올림퍼시 — 여동규, 이동재, 함가연, 진유진, 고나영",
         liveUrl: "https://www.figma.com/proto/MDpnSYXDgmj2e5oo7Bct7y/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=125-14&p=f&t=5MJGmxvdoGwsMrRC-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A"
+      },
+      "project-pencil": {
+        title: "나는 그들의 연필을 빌렸다",
+        tag: "Creative / 마감이 우리를 길렀조 · 2025",
+        problem: "오래된 전공서적을 뒤적이던 서준은 책 곳곳의 연필 자국·밑줄·오타 수정·여백 메모를 발견한다. 그 흔적들은 디지털 이전의 선배들이 직접 부딪히며 배웠던 과정이었다. 검색만으로 지식을 소비하는 자신을 떠올리며 학생은 충격을 받는다.",
+        process: [
+          {
+            subtitle: "작품 소개",
+            body: "스토리텔링기초 수업에서 제작한 프로젝트. 오래된 책 속 연필 자국·밑줄·여백 메모를 통해 디지털 이전 선배들의 배움의 흔적을 발견하는 이야기를 담았다."
+          }
+        ],
+        images: ["/images/pencil_poster.png"],
+        decision: [
+          "검색만으로 지식을 소비하는 현 세대와 직접 부딪히며 배웠던 이전 세대의 대비를 시각화했다.",
+          "연필 자국이라는 물리적 흔적을 통해 배움의 과정이 지닌 가치를 전달하고자 했다.",
+          "스토리텔링을 통해 독자가 자신의 학습 방식을 돌아보게 만드는 경험을 목표로 했다."
+        ],
+        outcome: "마감이 우리를 길렀조 — 김성민, 김주희, 이동재, 정민서",
+        liveUrl: "https://docs.google.com/document/u/0/d/1Au_ZUU5dq_z3Ezyxkl3E1HVIhMT8R8FpzMz-G6QX8S8/mobilebasic"
       }
     };
 
@@ -2120,8 +2151,18 @@
 
       // Set featured hero image in the sticky panel
       const modalHeroImg = document.getElementById('modal-hero-img');
+      const imagePanel = document.querySelector('.modal-image-panel');
       if (modalHeroImg && data.images && data.images[0]) {
         modalHeroImg.src = data.images[0];
+      }
+      if (imagePanel && modalHeroImg) {
+        if (projectId === 'project-pencil') {
+          imagePanel.style.backgroundColor = '#f5f0eb';
+          modalHeroImg.style.objectFit = 'contain';
+        } else {
+          imagePanel.style.backgroundColor = '';
+          modalHeroImg.style.objectFit = '';
+        }
       }
 
       document.getElementById('modal-title').textContent = data.title;
@@ -2155,6 +2196,9 @@
             stepImgSrc = data.images[1];
             stepImgAlt = "에일라: 균형의 그림자 내용 설명";
           }
+        } else if (projectId === 'project-pencil') {
+          // No process image in the right panel to avoid duplication with the left hero panel
+          stepImgSrc = null;
         } else if (data.images && data.images[idx]) {
           stepImgSrc = data.images[idx];
           stepImgAlt = `${data.title} step ${idx + 1} showcase`;
@@ -2186,7 +2230,11 @@
       document.getElementById('modal-outcome').textContent = data.outcome;
 
       // Links settings
-      document.getElementById('modal-live-btn').href = data.liveUrl;
+      const liveBtn = document.getElementById('modal-live-btn');
+      if (liveBtn) {
+        liveBtn.textContent = 'View More';
+        liveBtn.href = data.liveUrl;
+      }
 
       // Open Modal
       document.body.style.overflow = 'hidden';
