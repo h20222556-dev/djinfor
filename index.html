@@ -1504,7 +1504,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.92);
-      z-index: 9999;
+      z-index: 100000;
       display: none;
       align-items: center;
       justify-content: center;
@@ -2496,6 +2496,9 @@
     function openLightbox(src, alt) {
       lightboxImg.src = src;
       lightboxImg.alt = alt || 'Enlarged showcase';
+      if (lightbox && lightbox.parentNode !== document.body) {
+        document.body.appendChild(lightbox);
+      }
       lightbox.style.display = 'flex';
       void lightbox.offsetWidth; // Force reflow
       lightbox.classList.add('show');
