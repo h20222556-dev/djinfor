@@ -1499,6 +1499,29 @@
       transform: translateY(-1px);
     }
 
+    /* App Button (Secondary Variant) */
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 999px;
+      background-color: transparent;
+      border: 1.5px solid var(--color-on-surface);
+      color: var(--color-on-surface);
+      letter-spacing: 0.03em;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .app-btn:hover {
+      background-color: var(--color-on-surface);
+      color: var(--color-surface);
+      transform: translateY(-1px);
+    }
+
     /* Lightbox Overlay */
     .lightbox-overlay {
       opacity: 0;
@@ -1765,6 +1788,18 @@
               <p class="project-card-desc">사용자 취향과 관광 데이터를 통합 관리하는 DB를 설계하고, AI가 여행 코스를 자동 생성하는 맞춤형 추천 시스템</p>
             </div>
           </article>
+
+          <!-- Card Plin: Development -->
+          <article class="project-card reveal" data-category="development" data-id="project-plin" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View PLIN(플린) case study">
+            <div class="project-card-image-wrapper">
+              <img src="/images/plin_poster.png" alt="PLIN(플린) 앱 포스터">
+            </div>
+            <div class="project-card-info">
+              <span class="project-card-tag">DJ와 아이들</span>
+              <h3 class="project-card-title">PLIN(플린)</h3>
+              <p class="project-card-desc">공연 관람 기록을 지도 위에 핀으로 시각화하고, 예매·후기·커뮤니티를 하나로 연결한 통합 공연 아카이빙 앱</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1940,6 +1975,7 @@
           
           <div class="modal-footer">
             <a href="#" class="view-more-btn" id="modal-live-btn" target="_blank">View More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a href="#" class="app-btn" id="modal-app-btn" target="_blank" style="display: none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> 앱 체험하기</a>
           </div>
         </div>
       </div>
@@ -2064,6 +2100,26 @@
         ],
         outcome: "여행을 떠나조 — 여동규, 이동재, 정지은, 김우중",
         liveUrl: "https://www.notion.so/AI-DB-290a83ad9b6e809aa55bcca8f3e3eccf"
+      },
+      "project-plin": {
+        title: "PLIN(플린)",
+        tag: "Development / DJ와 아이들 · 2026",
+        problem: "공연 관람 기록을 지도 위에 핀을 꽂는 표현으로 시각화하고, 예매·후기·커뮤니티를 하나로 연결하여 다른 사람들과 소통하고 채팅하는 통합 공연 아카이빙 앱.",
+        process: [
+          {
+            subtitle: "프로젝트 소개",
+            body: "지도 기반 공연 아카이빙 플랫폼. 사용자가 관람한 공연 장소에 핀을 꽂아 기록하고, 후기 작성과 커뮤니티 소통, 실시간 채팅까지 하나의 앱에서 경험할 수 있도록 설계하였다. Next.js, Supabase, Kakao Maps API를 활용하여 개발하였다."
+          }
+        ],
+        images: ["/images/plin_poster.png"],
+        decision: [
+          "지도 위에 핀을 꽂는 직관적인 인터페이스로 공연 기록을 시각적으로 표현하였다.",
+          "예매·후기·커뮤니티·채팅을 단일 플랫폼에 통합하여 공연 문화 경험의 흐름을 끊기지 않게 설계하였다.",
+          "실시간 업데이트와 Kakao Maps 연동으로 위치 기반의 생동감 있는 아카이빙 경험을 구현하였다."
+        ],
+        outcome: "DJ와 아이들 — 이동재",
+        liveUrl: "https://plin-amber.vercel.app/",
+        appUrl: "https://plin-three.vercel.app/"
       }
     };
 
@@ -2293,6 +2349,9 @@
         } else if (projectId === 'project-gangwon') {
           imagePanel.style.backgroundColor = '#ffffff';
           modalHeroImg.style.objectFit = 'contain';
+        } else if (projectId === 'project-plin') {
+          imagePanel.style.backgroundColor = '#0f0f0f';
+          modalHeroImg.style.objectFit = 'contain';
         } else {
           imagePanel.style.backgroundColor = '';
           modalHeroImg.style.objectFit = '';
@@ -2330,7 +2389,7 @@
             stepImgSrc = data.images[1];
             stepImgAlt = "에일라: 균형의 그림자 내용 설명";
           }
-        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon') {
+        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon' || projectId === 'project-plin') {
           // No process image in the right panel to avoid duplication with the left hero panel
           stepImgSrc = null;
         } else if (data.images && data.images[idx]) {
@@ -2367,6 +2426,16 @@
       const liveBtn = document.getElementById('modal-live-btn');
       if (liveBtn) {
         liveBtn.href = data.liveUrl;
+      }
+
+      const appBtn = document.getElementById('modal-app-btn');
+      if (appBtn) {
+        if (projectId === "project-plin") {
+          appBtn.href = data.appUrl;
+          appBtn.style.display = "inline-flex";
+        } else {
+          appBtn.style.display = "none";
+        }
       }
 
       // Open Modal
