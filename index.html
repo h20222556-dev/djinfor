@@ -7,11 +7,6 @@
   
   <meta name="color-scheme" content="light dark">
   
-  <!-- Font loading: Pretendard and Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
 
   <script>
     // Inline script to prevent FOUC (Flash of Unstyled Content) by setting the correct theme immediately
@@ -28,6 +23,20 @@
   </script>
 
   <style>
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: url('/fonts/IBMPlexSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('/fonts/NanumSquareRoundR.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
     :root {
       /* Background & Surface */
       --color-background:               #fdf8f8;
@@ -61,7 +70,7 @@
       --color-error:                    #ba1a1a;
 
       /* Typography */
-      --font-family:        'Pretendard', 'Inter', sans-serif;
+      --font-family:        'IBMPlexSans', 'NanumSquareRound', sans-serif;
 
       /* Font sizes */
       --fs-display-lg:      72px;
