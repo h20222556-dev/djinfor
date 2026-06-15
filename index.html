@@ -1476,6 +1476,95 @@
       color: var(--color-on-surface-variant);
       line-height: var(--lh-normal);
     }
+
+    /* View More Button Redesign */
+    .view-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 999px;
+      background-color: var(--color-on-surface);
+      color: var(--color-surface);
+      border: none;
+      letter-spacing: 0.03em;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .view-more-btn:hover {
+      opacity: 0.82;
+      transform: translateY(-1px);
+    }
+
+    /* Lightbox Overlay */
+    .lightbox-overlay {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    dialog[open].lightbox-overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      opacity: 1;
+    }
+
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      transform: scale(0.92);
+      transition: transform 0.2s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    dialog[open].lightbox-overlay img {
+      transform: scale(1);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      padding: 8px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color var(--motion-default);
+    }
+
+    .lightbox-close-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .lightbox-close-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Zoom cursor style for modal images */
+    .modal-image-panel img,
+    .process-image-wrapper img {
+      cursor: zoom-in !important;
+    }
   </style>
 </head>
 <body>
@@ -1664,6 +1753,18 @@
               <p class="project-card-desc">오래된 전공서적 속 연필 자국에서 발견한 선배들의 흔적과 배움의 과정</p>
             </div>
           </article>
+
+          <!-- Card Gangwon: Planning -->
+          <article class="project-card reveal" data-category="planning" data-id="project-gangwon" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View 강원관광 AI 기반 맞춤형 여행 코스 추천 DB설계 case study">
+            <div class="project-card-image-wrapper">
+              <img src="/images/gangwon_poster.png" alt="강원관광 AI 기반 맞춤형 여행 코스 추천 DB설계 포스터">
+            </div>
+            <div class="project-card-info">
+              <span class="project-card-tag">여행을 떠나조</span>
+              <h3 class="project-card-title">강원관광 AI 기반 맞춤형 여행 코스 추천 DB설계</h3>
+              <p class="project-card-desc">사용자 취향과 관광 데이터를 통합 관리하는 DB를 설계하고, AI가 여행 코스를 자동 생성하는 맞춤형 추천 시스템</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1838,11 +1939,22 @@
           </div>
           
           <div class="modal-footer">
-            <a href="#" class="btn btn-primary" id="modal-live-btn" target="_blank">View More</a>
+            <a href="#" class="view-more-btn" id="modal-live-btn" target="_blank">View More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
           </div>
         </div>
       </div>
     </div>
+  </dialog>
+
+  <!-- Lightbox Overlay -->
+  <dialog id="image-lightbox" class="lightbox-overlay" aria-label="Enlarged image viewer">
+    <button class="lightbox-close-btn" aria-label="Close image lightbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <img id="lightbox-img" src="" alt="Enlarged showcase">
   </dialog>
 
   <!-- Contact Popups Overlay -->
@@ -1933,6 +2045,25 @@
         ],
         outcome: "마감이 우리를 길렀조 — 김성민, 김주희, 이동재, 정민서",
         liveUrl: "https://docs.google.com/document/u/0/d/1Au_ZUU5dq_z3Ezyxkl3E1HVIhMT8R8FpzMz-G6QX8S8/mobilebasic"
+      },
+      "project-gangwon": {
+        title: "강원관광 AI 기반 맞춤형 여행 코스 추천 DB설계",
+        tag: "Planning / 여행을 떠나조 · 2025",
+        problem: "현재 강원관광 홈페이지는 정보를 나열식으로 제공해 사용자가 직접 코스를 구성해야 하는 한계가 있으며, 산·바다·미식·액티비티 등 다양한 지역 자원을 개인 취향에 맞게 연결해주는 서비스가 요구된다. 이에 본 연구는 사용자 선호와 관광 데이터를 통합적으로 관리할 수 있는 데이터베이스를 설계하고, 이를 기반으로 AI가 여행 코스를 자동 생성하도록 함으로써 탐색 과정의 부담을 줄이고 맞춤형 관광 경험을 제공하고자 한다.",
+        process: [
+          {
+            subtitle: "연구 개요",
+            body: "연구 주제: AI 기반 개인화 관광 추천 모델 연구 지역 데이터 기반 맞춤형 여행 코스 추천 시스템. 연구 방법: AI 코스 추천의 핵심 기능을 정의하고 주요 요구사항을 반영하여 개념적 설계를 수행한 뒤, 데이터 정규화 과정을 거쳐 ERD(개체-관계 다이어그램)를 작성하여 데이터 구조를 완성하였다. 주요 테이블: 사용자, 추천 코스, 코스 디테일, 축제, 관광지, 식당, 피드백, 로그로 구성하여 사용자 선호와 지역 관광 데이터를 체계적으로 관리한다."
+          }
+        ],
+        images: ["/images/gangwon_poster.png"],
+        decision: [
+          "사용자 취향과 다양한 관광 데이터를 체계적으로 관리하기 위한 테이블 명세서를 구성하였다.",
+          "사용자와 여행지 간의 데이터 관계를 명확히 정의하기 위해 개념적 설계를 수행하였다.",
+          "개념적 모델을 바탕으로 실제 시스템 구축이 가능한 효율적인 논리적 설계를 도출하였다."
+        ],
+        outcome: "여행을 떠나조 — 여동규, 이동재, 정지은, 김우중",
+        liveUrl: "https://www.notion.so/AI-DB-290a83ad9b6e809aa55bcca8f3e3eccf"
       }
     };
 
@@ -2159,6 +2290,9 @@
         if (projectId === 'project-pencil') {
           imagePanel.style.backgroundColor = '#f5f0eb';
           modalHeroImg.style.objectFit = 'contain';
+        } else if (projectId === 'project-gangwon') {
+          imagePanel.style.backgroundColor = '#ffffff';
+          modalHeroImg.style.objectFit = 'contain';
         } else {
           imagePanel.style.backgroundColor = '';
           modalHeroImg.style.objectFit = '';
@@ -2196,7 +2330,7 @@
             stepImgSrc = data.images[1];
             stepImgAlt = "에일라: 균형의 그림자 내용 설명";
           }
-        } else if (projectId === 'project-pencil') {
+        } else if (projectId === 'project-pencil' || projectId === 'project-gangwon') {
           // No process image in the right panel to avoid duplication with the left hero panel
           stepImgSrc = null;
         } else if (data.images && data.images[idx]) {
@@ -2232,7 +2366,6 @@
       // Links settings
       const liveBtn = document.getElementById('modal-live-btn');
       if (liveBtn) {
-        liveBtn.textContent = 'View More';
         liveBtn.href = data.liveUrl;
       }
 
@@ -2349,6 +2482,55 @@
         });
       });
     }
+
+    // Lightbox zoom functionality
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = lightbox ? lightbox.querySelector('.lightbox-close-btn') : null;
+
+    // Event delegation on project-modal for zoomable images
+    const projectModal = document.getElementById('project-modal');
+    if (projectModal && lightbox && lightboxImg) {
+      projectModal.addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG' && (e.target.closest('.modal-image-panel') || e.target.closest('.process-image-wrapper'))) {
+          openLightbox(e.target.src, e.target.alt);
+        }
+      });
+    }
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || 'Enlarged showcase';
+      lightbox.showModal();
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      if (lightbox) {
+        lightbox.close();
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lightboxImg.src = '';
+      }
+    }
+
+    if (lightbox) {
+      if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+      }
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox && lightbox.open) {
+        closeLightbox();
+      }
+    });
   </script>
 </body>
 </html>
