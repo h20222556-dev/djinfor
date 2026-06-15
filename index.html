@@ -1486,16 +1486,18 @@
       font-size: 14px;
       font-weight: 500;
       border-radius: 999px;
-      background-color: var(--color-on-surface);
-      color: var(--color-surface);
-      border: none;
+      background: transparent;
+      color: var(--color-on-surface);
+      border: 1.5px solid var(--color-on-surface);
       letter-spacing: 0.03em;
       transition: all 0.25s ease;
       text-decoration: none;
+      cursor: none;
     }
 
     .view-more-btn:hover {
-      opacity: 0.82;
+      background-color: var(--color-on-surface);
+      color: var(--color-surface);
       transform: translateY(-1px);
     }
 
@@ -1508,12 +1510,13 @@
       font-size: 14px;
       font-weight: 500;
       border-radius: 999px;
-      background-color: transparent;
-      border: 1.5px solid var(--color-on-surface);
+      background: transparent;
       color: var(--color-on-surface);
+      border: 1.5px solid var(--color-on-surface);
       letter-spacing: 0.03em;
       transition: all 0.25s ease;
       text-decoration: none;
+      cursor: none;
     }
 
     .app-btn:hover {
