@@ -1685,6 +1685,18 @@
               <p class="project-card-desc"></p>
             </div>
           </article>
+
+          <!-- Card 5: Creative - Ayla -->
+          <article class="project-card reveal" data-category="creative" data-id="project-ayla" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View 에일라: 균형의 그림자 case study">
+            <div class="project-card-image-wrapper">
+              <img src="/images/ayla_poster.png" alt="에일라: 균형의 그림자 포스터">
+            </div>
+            <div class="project-card-info">
+              <span class="project-card-tag">올림퍼시</span>
+              <h3 class="project-card-title">에일라: 균형의 그림자</h3>
+              <p class="project-card-desc">신화를 바탕으로 새롭게 각색한 프리퀄 이야기</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -1928,6 +1940,26 @@
         outcome: "",
         liveUrl: "",
         githubUrl: ""
+      },
+      "project-ayla": {
+        title: "에일라: 균형의 그림자",
+        tag: "Creative / 올림퍼시 · 2025",
+        problem: "신화를 바탕으로 새롭게 각색한 프리퀄 이야기 (신을 주제로) 세상이 완성된 뒤, 신들은 더 완벽한 세계를 원했다. 그 욕망은 결국 \"신조차 신을 초월하려 한 죄\"가 되어, 균형의 여신 에일라가 희생된다.",
+        process: [
+          {
+            subtitle: "작품 소개",
+            body: "주제 선점이유: 영화 '퍼시 잭슨'이 놓친 원작의 디테일을 보완하여 아쉬움을 달래고자 본 프로젝트를 기획하였다. 원작의 고증을 바탕으로 신화 세계를 재구성하되 영화와 자연스럽게 이어지도록 하여, 팬들이 상상하던 진정한 세계관을 완성하고자 한다. 주요 등장인물: 에일라 — 강한 신념을 지닌 균형의 여신. 제우스 — 절대 권력자, 에일라를 시간의 틈으로 추방한다. 헤르메스 — 에일라가 남긴 균형의 패를 회수하며 미래 하프블러드 캠프의 모태가 되는 성역을 세운다. 데미갓 — 신들의 보호를 받지 못하는 아이들. 원작 계승점: 올림포스 신들과 제우스의 번개를 둘러싼 갈등, 하프블러드 캠프라는 핵심 설정을 유지하면서, 주인공을 여신 에일라로 설정하여 균형이라는 철학적 메시지를 녹여냈다."
+          }
+        ],
+        images: ["/images/ayla_poster.png", "/images/ayla_content.png"],
+        decision: [
+          "완벽주의에 갇혀 고립된 현대인들에게 진정한 힘은 독선이 아닌 공존에 있음을 전하고자 했다.",
+          "불완전한 존재들이 서로의 결핍을 채우며 연대하는 모습을 통해 완벽하지 않아도 괜찮다는 위로를 전한다.",
+          "관객들로 하여금 스스로를 옥죄던 강박을 내려놓고 무너진 삶의 중심을 회복하게 만드는 치유의 동력이 되기를 기대한다."
+        ],
+        outcome: "3조 올림퍼시 — 여동규, 이동재, 함가연, 진유진, 고나영",
+        liveUrl: "#",
+        githubUrl: "#"
       }
     };
 
@@ -2174,12 +2206,24 @@
         stepDiv.appendChild(p);
 
         // Optional placeholder images inside process block
-        if (data.images && data.images[idx]) {
+        let stepImgSrc = null;
+        let stepImgAlt = null;
+        if (projectId === 'project-ayla') {
+          if (idx === 0 && data.images && data.images[1]) {
+            stepImgSrc = data.images[1];
+            stepImgAlt = "에일라: 균형의 그림자 내용 설명";
+          }
+        } else if (data.images && data.images[idx]) {
+          stepImgSrc = data.images[idx];
+          stepImgAlt = `${data.title} step ${idx + 1} showcase`;
+        }
+
+        if (stepImgSrc) {
           const imgWrapper = document.createElement('div');
           imgWrapper.className = 'process-image-wrapper';
           const img = document.createElement('img');
-          img.src = data.images[idx];
-          img.alt = `${data.title} step ${idx + 1} showcase`;
+          img.src = stepImgSrc;
+          img.alt = stepImgAlt;
           imgWrapper.appendChild(img);
           stepDiv.appendChild(imgWrapper);
         }
